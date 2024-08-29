@@ -12,7 +12,7 @@ import (
 const backup = false
 
 func main() {
-	startcmd := exec.Command("java", "@user_jvm_args.txt", "@libraries/net/minecraftforge/forge/1.20.1-47.3.5/unix_args.txt", "nogui", "\"$@\"")
+	startcmd := exec.Command("java", "@user_jvm_args.txt", "@libraries/net/minecraftforge/forge/1.20.1-47.3.0/unix_args.txt", "nogui", "\"$@\"")
 	stdinpipe, err := startcmd.StdinPipe()
 	if err != nil {
 		log.Fatalf("Failed to set stdinpipe: %v", err)
