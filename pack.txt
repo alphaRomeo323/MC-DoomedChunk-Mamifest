@@ -1,2 +1,2 @@
-https://cdn.discordapp.com/attachments/880422120658718730/1346090238744989746/FPS1-0.4.1.zip?ex=67c6ebba&is=67c59a3a&hm=49e792ed3ffcbbc551cf878eb87e803cc329372ca8ac4779192db6e1238ade53&
+https://cdn.discordapp.com/attachments/880422120658718730/1347787510780268616/FPS1-0.4.2.zip?ex=67cd186f&is=67cbc6ef&hm=e8e62bb21db5d1002e23edcd1c521dc4e1c6ee4ad478c31529748f2bf2e19ba5&
  out=pack.zip
