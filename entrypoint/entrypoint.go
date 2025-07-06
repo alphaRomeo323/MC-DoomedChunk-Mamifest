@@ -15,14 +15,15 @@ const backup = false
 func main() {
 	//prepare.sh実行
 	if prepare {
-		preparecmd := exec.Command("./backup.sh")
+		preparecmd := exec.Command("./prepare.sh")
 		preparecmd.Stdin = os.Stdin
 		preparecmd.Stdout = os.Stdout
 		preparecmd.Stderr = os.Stderr
-		err = preparecmd.Run()
+		err := preparecmd.Run()
 		if err != nil {
 			if exitErr, ok := err.(*exec.ExitError); ok {
 				log.Printf("prepare.sh returned non-zero code: %v", err)
+				os.Exit(exitErr.ExitCode())
 			} else {
 				log.Printf("Failed to run prepare.sh: %v", err)
 				os.Exit(2)
@@ -32,7 +33,7 @@ func main() {
 	//javaコマンド定義
 	startcmd := exec.Command("java", "@user_jvm_args.txt", "@libraries/net/minecraftforge/forge/1.20.1-47.4.0/unix_args.txt", "nogui", "\"$@\"")
 	//パイプライン準備
-	stdinpipe, err := startcmd.StdinPipe()
+	stdinpipe, err = startcmd.StdinPipe()
 	if err != nil {
 		log.Fatalf("Failed to set stdinpipe: %v", err)
 	}
