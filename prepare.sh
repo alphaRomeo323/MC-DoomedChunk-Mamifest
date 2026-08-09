@@ -14,7 +14,7 @@ echo
 
 if test -d "/data/world"; then
   echo "=> removing previous world..."
-  rm -r "data/world"
+  rm -r "/data/world"
 fi
 for item in `ls -F "/data/maps" | grep /`; do
   maps+=("$item")
@@ -25,4 +25,4 @@ if test -z $maps; then
 fi
 value=$(($RANDOM % ${#maps[@]}))
 echo "=> copying /data/maps/${maps[$value]} as world directory..."
-cp -r "/data/maps/${maps[$value]}" "data/world"
+cp -r "/data/maps/${maps[$value]}" "/data/world"
