@@ -9,10 +9,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /doomedchunk
-COPY installer.txt pack.txt user_jvm_args.txt /doomedchunk/
+COPY installer.txt pack.txt /doomedchunk/
 RUN aria2c -i installer.txt && \
-    java -jar installer.jar --installServer && \
-    rm -f *.bat *.sh *.txt installer*
+    java -jar installer.jar --installServer
 RUN mkdir -p mods && \
     mkdir tmp && \
     aria2c -i pack.txt
@@ -27,9 +26,10 @@ RUN cat manifest.json \
     | jq -r -c '.files[] | "https://www.curseforge.com/api/v1/mods/" + (.projectID|tostring) + "/files/" + (.fileID|tostring) + "/download"' > mods.txt \
     && wget --trust-server-names -i mods.txt -P mods \
     && rm -f mods.txt
+RUN rm -f *.bat *.sh *.txt installer*
 RUN echo 'eula=true' > eula.txt
 # COPY server-icon.png /doomedchunk/
-COPY server.properties prepare.sh /doomedchunk/
+COPY server.properties prepare.sh user_jvm_args.txt /doomedchunk/
 COPY config /doomedchunk/config
 # COPY mods /doomedchunk/mods
 COPY --from=build /go/src/entrypoint/entrypoint /doomedchunk/entrypoint
