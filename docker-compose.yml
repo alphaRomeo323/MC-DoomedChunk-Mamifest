@@ -2,7 +2,7 @@ services:
   minecraft:
     image: "ghcr.io/alpharomeo323/mc-doomedchunk:${IMAGE_TAG}"
     ports:
-      - 25998:25565
+      - 25565:25565
     volumes:
       - type: bind
         source: data
@@ -19,4 +19,6 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
     restart: unless-stopped
-    
+networks:
+  default:
+    enable_ipv6: true
