@@ -77,25 +77,5 @@ func main() {
 	case code := <-waitCh:
 		exitCode = code
 	}
-	if backup {
-		backupcmd := exec.Command("./backup.sh")
-		backupcmd.Stdin = os.Stdin
-		backupcmd.Stdout = os.Stdout
-		backupcmd.Stderr = os.Stderr
-		err = backupcmd.Run()
-		if err != nil {
-			if exitErr, ok := err.(*exec.ExitError); ok {
-				log.Printf("backup.sh returned non-zero code: %v", err)
-				if exitCode == 0 {
-					exitCode = exitErr.ExitCode()
-				}
-			} else {
-				log.Printf("Failed to run backup.sh: %v", err)
-				if exitCode == 0 {
-					exitCode = 1
-				}
-			}
-		}
-	}
 	os.Exit(exitCode)
 }
