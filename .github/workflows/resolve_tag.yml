@@ -1,0 +1,20 @@
+# .github/workflows/resolve_tag.yml
+name: Resolve Image Tag
+on:
+  workflow_call:
+    outputs:
+      tag:
+        value: ${{ jobs.resolve_tag.outputs.tag }}
+jobs:
+  resolve_tag:
+    runs-on: ubuntu-slim
+    outputs:
+      tag: ${{ steps.resolve.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: resolve tag
+        id: resolve
+        shell: bash
+        run: |
+          source .env
+          echo "tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"

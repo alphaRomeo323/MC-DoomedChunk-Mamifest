@@ -27,6 +27,6 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/alpharomeo323/mc-doomedchunk:alpine,ghcr.io/alpharomeo323/mc-doomedchunk:latest
+          tags: ghcr.io/alpharomeo323/mc-doomedchunk:alpine,ghcr.io/alpharomeo323/mc-doomedchunk:latest,ghcr.io/alpharomeo323/mc-doomedchunk:${{ needs.resolve_tag.outputs.tag }}
           cache-from: type=registry,ref=ghcr.io/alpharomeo323/mc-doomedchunk:buildcache
           cache-to: type=registry,ref=ghcr.io/alpharomeo323/mc-doomedchunk:buildcache,mode=max
