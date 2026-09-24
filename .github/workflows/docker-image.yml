@@ -5,7 +5,10 @@ on:
     branches: [main]
 
 jobs:
+  resolve_tag:
+    uses: ./.github/workflows/resolve_tag.yml
   alpine:
+    needs: resolve_tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
