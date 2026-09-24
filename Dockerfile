@@ -29,7 +29,7 @@ RUN cat manifest.json \
     && rm -f mods.txt
 RUN echo 'eula=true' > eula.txt
 # COPY server-icon.png /FPS1/
-COPY server.properties prepare.sh backup.sh /FPS1/
+COPY server.properties prepare.sh /FPS1/
 COPY config /FPS1/config
 # COPY mods /FPS1/mods
 COPY --from=build /go/src/entrypoint/entrypoint /FPS1/entrypoint
