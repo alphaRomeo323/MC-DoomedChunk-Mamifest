@@ -8,8 +8,8 @@ RUN apt-get update && \
     apt-get install -y unzip aria2 jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-WORKDIR /FPS1
-COPY installer.txt pack.txt user_jvm_args.txt /FPS1/
+WORKDIR /doomedchunk
+COPY installer.txt pack.txt user_jvm_args.txt /doomedchunk/
 RUN aria2c -i installer.txt && \
     java -jar installer.jar --installServer && \
     rm -f *.bat *.sh *.txt installer*
@@ -28,13 +28,13 @@ RUN cat manifest.json \
     && wget --trust-server-names -i mods.txt -P mods \
     && rm -f mods.txt
 RUN echo 'eula=true' > eula.txt
-# COPY server-icon.png /FPS1/
-COPY server.properties prepare.sh /FPS1/
-COPY config /FPS1/config
-# COPY mods /FPS1/mods
-COPY --from=build /go/src/entrypoint/entrypoint /FPS1/entrypoint
+# COPY server-icon.png /doomedchunk/
+COPY server.properties prepare.sh /doomedchunk/
+COPY config /doomedchunk/config
+# COPY mods /doomedchunk/mods
+COPY --from=build /go/src/entrypoint/entrypoint /doomedchunk/entrypoint
 RUN ln -s /data/ops.json ops.json && \
     ln -s /data/usercache.json usercache.json && \
     ln -s /data/whitelist.json whitelist.json
     # ln -s /data/discordchat.cfg config/discordchat.cfg
-ENTRYPOINT [ "/FPS1/entrypoint" ]
+ENTRYPOINT [ "/doomedchunk/entrypoint" ]
