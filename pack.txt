@@ -1,2 +1,2 @@
-https://dir.hakuteialpha.com/doomedchunk/modpacks/DoomedChunk-0.10.0.zip
+https://dir.hakuteialpha.com/doomedchunk/modpacks/DoomedChunk-0.10.1.zip
  out=pack.zip
