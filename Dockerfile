@@ -5,14 +5,14 @@ RUN go build
 
 FROM eclipse-temurin:21-jre
 RUN apt-get update && \
-    apt-get install -y unzip rclone aria2 jq && \
+    apt-get install -y unzip aria2 jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /FPS1
 COPY installer.txt pack.txt user_jvm_args.txt /FPS1/
 RUN aria2c -i installer.txt && \
     java -jar installer.jar --installServer && \
-    rm -f installer*
+    rm -f *.bat *.sh *.txt installer*
 RUN mkdir -p mods && \
     mkdir tmp && \
     aria2c -i pack.txt
@@ -24,8 +24,9 @@ RUN mv pack.zip tmp && \
     mv tmp/manifest.json . && \
     rm -rf tmp
 RUN cat manifest.json \
- | jq -r -c '.files[] | "https://www.curseforge.com/api/v1/mods/" + (.projectID|tostring) + "/files/" + (.fileID|tostring) + "/download"' \
- | wget --trust-server-names -i - -P mods
+    | jq -r -c '.files[] | "https://www.curseforge.com/api/v1/mods/" + (.projectID|tostring) + "/files/" + (.fileID|tostring) + "/download"' > mods.txt \
+    && wget --trust-server-names -i mods.txt -P mods \
+    && rm -f mods.txt
 RUN echo 'eula=true' > eula.txt
 # COPY server-icon.png /FPS1/
 COPY server.properties prepare.sh backup.sh /FPS1/

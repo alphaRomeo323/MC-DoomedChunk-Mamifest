@@ -31,7 +31,7 @@ func main() {
 		}
 	}
 	//javaコマンド定義
-	startcmd := exec.Command("java", "@user_jvm_args.txt", "@libraries/net/minecraftforge/forge/1.20.1-47.4.0/unix_args.txt", "nogui", "\"$@\"")
+	startcmd := exec.Command("java", "@user_jvm_args.txt", "@libraries/net/neoforged/neoforge/21.1.251/unix_args.txt", "nogui", "\"$@\"")
 	//パイプライン準備
 	stdinpipe, err := startcmd.StdinPipe()
 	if err != nil {
@@ -76,26 +76,6 @@ func main() {
 		exitCode = <-waitCh
 	case code := <-waitCh:
 		exitCode = code
-	}
-	if backup {
-		backupcmd := exec.Command("./backup.sh")
-		backupcmd.Stdin = os.Stdin
-		backupcmd.Stdout = os.Stdout
-		backupcmd.Stderr = os.Stderr
-		err = backupcmd.Run()
-		if err != nil {
-			if exitErr, ok := err.(*exec.ExitError); ok {
-				log.Printf("backup.sh returned non-zero code: %v", err)
-				if exitCode == 0 {
-					exitCode = exitErr.ExitCode()
-				}
-			} else {
-				log.Printf("Failed to run backup.sh: %v", err)
-				if exitCode == 0 {
-					exitCode = 1
-				}
-			}
-		}
 	}
 	os.Exit(exitCode)
 }
